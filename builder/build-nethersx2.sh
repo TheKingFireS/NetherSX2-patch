@@ -1,4 +1,6 @@
 #!/bin/bash
+# Sets the window's title
+printf "\033]2;NetherSX2 Builder\007"
 # ********************************* CONFIG **********************************
 patch_name="NetherSX2 Builder v1.7"
 patch_author=""
