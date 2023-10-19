@@ -20,7 +20,8 @@ printf "\e[1;91m========================\n"
 printf " NetherSX2 Patcher v1.7\n"
 printf "========================\e[0m\n"
 
-# Check if the NetherSX2 APK exists and if it's named
+# Check if the NetherSX2 APK exists and if it's named correctly
+# Check if the NetherSX2 APK isn't just a renamed AetherSX2 4248 APK
 if [ ! -f "15210-v1.5-4248-noads.apk" ] || [ "$(md5sum "15210-v1.5-4248-noads.apk" | awk '{print $1}')" = "c98b0e4152d3b02fbfb9f62581abada5" ]; then
 	printf "\e[0;31mError: No APK found or wrong one provided!\n"
 	printf "Please provide a copy of NetherSX2 named 15210-v1.5-4248-noads.apk!\e[0m\n"
@@ -46,6 +47,17 @@ if command -v "aapt" >/dev/null 2>&1; then
 		display_done
 	else
 		printf "\e[1;32m[Already removed]\e[0m\n"
+	fi
+
+	# Adds Additional Options to App Settings
+	display_cyan "Adding more options to "
+	display_light_red "App Settings...        "
+	aapt r 15210-v1.5-4248-noads.apk res/xml/advanced_preferences.xml
+	aapt a 15210-v1.5-4248-noads.apk res/xml/advanced_preferences.xml			> /dev/null 2>&1
+	aapt r 15210-v1.5-4248-noads.apk res/xml/graphics_preferences.xml
+	aapt a 15210-v1.5-4248-noads.apk res/xml/graphics_preferences.xml			> /dev/null 2>&1
+	if [ $? -eq 0 ]; then
+ 		display_done
 	fi
 
 	# Updates the FAQ to show that we're using the latest version of NetherSX2
@@ -129,6 +141,16 @@ else
 		display_done
 	else
 		printf "\e[1;32m[Already removed]\e[0m\n"
+	fi
+
+	display_cyan "Adding more options to "
+	display_light_red "App Settings...        "
+	lib/aapt r 15210-v1.5-4248-noads.apk res/xml/advanced_preferences.xml
+	lib/aapt a 15210-v1.5-4248-noads.apk res/xml/advanced_preferences.xml			> /dev/null 2>&1
+	lib/aapt r 15210-v1.5-4248-noads.apk res/xml/graphics_preferences.xml
+	lib/aapt a 15210-v1.5-4248-noads.apk res/xml/graphics_preferences.xml			> /dev/null 2>&1
+	if [ $? -eq 0 ]; then
+ 		display_done
 	fi
 
 	display_cyan "Updating the "
