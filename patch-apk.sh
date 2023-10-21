@@ -1,4 +1,6 @@
 #!/bin/bash
+# Sets the window's title
+printf "\033]2;NetherSX2 Builder\007"
 # alias to display [Done] in green
 display_done() {
 	printf "\e[1;32m[Done]\e[0m\n"
@@ -19,6 +21,13 @@ clear
 printf "\e[1;91m========================\n"
 printf " NetherSX2 Patcher v1.7\n"
 printf "========================\e[0m\n"
+
+# Makes sure Java is installed and in the PATH
+if ! command -v java &> /dev/null; then
+	printf "\e[0;31mError: The OpenJDK is not installed!\n"
+	printf "Please download and install the OpenJDK from your distro's repo.\e[0m\n"
+	exit 1
+fi
 
 # Check if the NetherSX2 APK exists and if it's named correctly
 # Check if the NetherSX2 APK isn't just a renamed AetherSX2 4248 APK
