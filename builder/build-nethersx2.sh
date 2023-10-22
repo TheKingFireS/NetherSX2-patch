@@ -49,11 +49,11 @@ patch() {
     # Patching the file
     echo -ne "\e[96mPatching to \e[0m\e[91mNetherSX2...\e[0m"
     for i in "$input_path"/*.apk; do
-        $p2f/lib/xdelta3 -d -f -s "$i" "$xdelta_patch" "$output_path/$(basename "$i" .apk)$patched_end.apk"
+        "$p2f"/lib/xdelta3 -d -f -s "$i" "$xdelta_patch" "$output_path/$(basename "$i" .apk)$patched_end.apk"
     done
     echo -e "\e[92m[Done]\e[0m"
     read -p "Press Enter to exit..."
-    cd "$output_path"
+    cd "$output_path" || exit
     exit 0
 }
 
@@ -77,7 +77,7 @@ if [ ! -d "$input_path" ]; then
 else
     # Checks if there's an apk to patch and if the md5 hash matches
     # Otherwise it downloads it from the AetherSX2 Archive
-    if [ -z "$(find $input_path -name "*.apk" -type f)" ]; then
+    if [ -z "$(find "$input_path" -name "*.apk" -type f)" ]; then
         nofile
     fi
 fi
